@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+
+    >
+<TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:textSize="20sp"
+    android:textColor="#000000"
+    />
+    
+    <TableLayout
+    	android:id="@+id/layout1"
+    	android:layout_height="wrap_content"
+    	android:layout_width="fill_parent"
+    	android:padding="30dp"
+    >
+    	<TableRow
+    		android:id="@+id/row1"
+    		android:layout_height="wrap_content"
+    		android:layout_width="fill_parent"
+    	>
+    	<TextView
+    		android:id="@+id/txtUsername"
+    		android:layout_height="wrap_content"
+    		android:layout_width="wrap_content"
+    		android:text="NAME"
+    		android:padding="10dp"
+    		android:textColor="#000000"
+    	></TextView>
+    	
+    	<EditText
+    		android:id="@+id/editTname"
+    		android:layout_height="wrap_content"
+    		android:layout_width="fill_parent"
+    		android:layout_weight="0.5"
+    		android:padding="10dp"
+    		android:textColor="#000000"
+    	>
+    	</EditText>
+    </TableRow>
+    <TableRow
+    	android:id="@+id/row2"
+    >
+    	<TextView
+    		android:id="@+id/txtPassword"
+    		android:layout_height="wrap_content"
+    		android:layout_width="wrap_content"
+    		android:text="PASS"
+    		android:padding="10dp"
+    		android:textColor="#000000"
+    	></TextView>
+    	
+    	<EditText
+    		android:id="@+id/editTPassword"
+    		android:layout_height="wrap_content"
+    		android:layout_width="fill_parent"
+    		android:layout_weight="0.5"
+    		android:padding="10dp"
+    		style="@android:style/Widget.EditText"
+    		android:password="true"
+    		android:textColor="#000000"
+    	></EditText>
+    </TableRow>
+    <TableRow
+    	android:id="@+id/row3"
+    	android:layout_gravity="center"
+    >
+
+    	<Button
+    	    android:id="@+id/buttonTLogin"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:layout_gravity="center"
+    	    android:layout_weight="1"
+    	    android:onClick="login"
+    	    android:text="lOGIN" >
+</Button>
+    	<Button
+    		android:id="@+id/buttonCancel"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:text="Cancel"
+    		android:onClick="cancel"
+    		android:layout_gravity="center"
+    		android:layout_weight="1"
+    	></Button>
+    </TableRow>
+    </TableLayout>
+
+    <Button
+        android:id="@+id/buttonTRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        android:onClick="register" />
+
+    <Button
+        android:id="@+id/buttonAdmin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ADMIN" 
+        android:onClick="admin"/>
+
+</LinearLayout>

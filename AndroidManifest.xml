@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.universityattendance"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="8" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/attendance"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".SplashScreen"
+            android:label="@string/app_name"
+            android:launchMode="standard" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.universityattendance.MainActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity android:name="com.example.universityattendance.TeacherLoginPage" >
+        </activity>
+        <activity android:name="com.example.universityattendance.MemberActivity" >
+        </activity>
+          <activity android:name="com.example.universityattendance.CourseActivity" >
+        </activity>
+         <activity android:name="com.example.universityattendance.AdminPage" >
+        </activity>
+           <activity android:name="com.example.universityattendance.AdminAddStudent" >
+        </activity>
+        <activity android:name="com.example.universityattendance.AttendanceActivity" >
+        </activity>
+    </application>
+
+</manifest>
