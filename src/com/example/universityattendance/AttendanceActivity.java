@@ -63,7 +63,7 @@ public class AttendanceActivity extends ListActivity implements OnClickListener 
 			db.open();
 			sem = Integer.parseInt(db.getSEMByCourse(coursename));
 
-			c = db.getStudentsBySEM(sem);
+			c = db.getStudentsBySEM(sem);//Getting the list of roll no in a particular subject
 			crs = new String[c.getCount()];
 			Log.i("SHUBH", "GETTING " + c.getCount() + " no. of students ");
 			for (int i = 0; i < c.getCount(); ++i) {
@@ -79,9 +79,11 @@ public class AttendanceActivity extends ListActivity implements OnClickListener 
 		}
 
 		try {
-			setListAdapter(new ArrayAdapter<String>(this,
-					android.R.layout.simple_list_item_multiple_choice,
-					new ArrayList()));
+			
+			
+			setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, new ArrayList()));
+			ListView listView = getListView();
+		    listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
 			new AddStringTask().execute();
 		} catch (Exception e) {
@@ -125,6 +127,7 @@ public class AttendanceActivity extends ListActivity implements OnClickListener 
 	@Override
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
+	
 		ListAdapter lAdapter = getListAdapter();
 		StringBuilder choicesString = new StringBuilder();
 		a = new SparseBooleanArray();
@@ -142,6 +145,7 @@ public class AttendanceActivity extends ListActivity implements OnClickListener 
 		}
 		Toast.makeText(AttendanceActivity.this, choicesString,
 				Toast.LENGTH_LONG).show();
+				
 
 	}
 

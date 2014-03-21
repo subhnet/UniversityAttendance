@@ -30,7 +30,7 @@ public class DBAdapter extends Activity {
 	public DBAdapter(Context context) {
 		this.mCtx = context;
 	}
-
+ 
 	public DBAdapter open() throws SQLException {
 		mDbHelper = new DBHelper(mCtx);
 		mDb = mDbHelper.getWritableDatabase();
