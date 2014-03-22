@@ -11,6 +11,7 @@ import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -31,7 +32,6 @@ public class AttendanceActivity extends ListActivity implements OnClickListener 
 	ListView list;
 	String my_sel_items;
 	private SparseBooleanArray a;
-	ArrayList<String> presentRoll = new ArrayList<String>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -127,24 +127,21 @@ public class AttendanceActivity extends ListActivity implements OnClickListener 
 	@Override
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
-	
-		ListAdapter lAdapter = getListAdapter();
-		StringBuilder choicesString = new StringBuilder();
+		String checked = "";
 		a = new SparseBooleanArray();
 		a.clear();
-		a = ((ListView) lAdapter).getCheckedItemPositions();
+		a = getListView().getCheckedItemPositions();
+		int cntChoice = getListAdapter().getCount();
 
-		for (int i = 0; i < a.size(); i++) {
-			// added if statement to check for true. The SparseBooleanArray
-			// seems to maintain the keys for the checked items, but it sets
-			// the value to false. Adding a boolean check returns the correct
-			// result.
-			if (a.valueAt(i) == true)
-				choicesString.append(a.keyAt(i)).append(" ");
-
+		for(int i = 0; i < cntChoice; i++)
+		{
+		if(a.get(i) == true) 
+	     {
+	         checked += getListView().getItemAtPosition(i).toString() + "\n";
+	     }
+	     
 		}
-		Toast.makeText(AttendanceActivity.this, choicesString,
-				Toast.LENGTH_LONG).show();
+		Log.i("SHUBH", "U selected "+ checked);
 				
 
 	}
