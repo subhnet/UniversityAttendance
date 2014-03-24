@@ -25,9 +25,10 @@ public class AdminAddStudent extends Activity {
 		txtSem = (EditText) findViewById(R.id.editSem1);
 		
 		dbAdapter = new DBAdapter(this);
-		dbAdapter.open();
+		
 	}
 	public void addStudent(View v){
+		dbAdapter.open();
 		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(txtStudentname.getWindowToken(), 0);
 		imm.hideSoftInputFromWindow(txtRoll.getWindowToken(), 0);

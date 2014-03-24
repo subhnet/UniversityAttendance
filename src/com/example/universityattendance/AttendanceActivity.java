@@ -1,10 +1,14 @@
 package com.example.universityattendance;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import android.app.Activity;
 import android.app.ListActivity;
+import android.content.Intent;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,13 +29,14 @@ public class AttendanceActivity extends ListActivity implements OnClickListener 
 	Cursor c;
 	String[] crs;
 	String TAG = "Shubh";
-	String t_id;
+	String t_id,class_id;
 	String coursename;
 	Button submitButton;
 	Integer sem;
 	ListView list;
 	String my_sel_items;
 	private SparseBooleanArray a;
+	ArrayList<String> Selected_Roll_array = new ArrayList<String>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +68,8 @@ public class AttendanceActivity extends ListActivity implements OnClickListener 
 			db.open();
 			sem = Integer.parseInt(db.getSEMByCourse(coursename));
 
-			c = db.getStudentsBySEM(sem);//Getting the list of roll no in a particular subject
+			c = db.getStudentsBySEM(sem);// Getting the list of roll no in a
+											// particular subject
 			crs = new String[c.getCount()];
 			Log.i("SHUBH", "GETTING " + c.getCount() + " no. of students ");
 			for (int i = 0; i < c.getCount(); ++i) {
@@ -71,7 +77,6 @@ public class AttendanceActivity extends ListActivity implements OnClickListener 
 				c.moveToNext();
 			}
 			c.close();
-			db.close();
 		} catch (Exception e) {
 			Toast.makeText(getApplicationContext(),
 					"Could not retrieve course Details", Toast.LENGTH_LONG)
@@ -79,11 +84,11 @@ public class AttendanceActivity extends ListActivity implements OnClickListener 
 		}
 
 		try {
-			
-			
-			setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, new ArrayList()));
+
+			setListAdapter(new ArrayAdapter<String>(this,
+					android.R.layout.simple_list_item_checked, new ArrayList()));
 			ListView listView = getListView();
-		    listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+			listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
 			new AddStringTask().execute();
 		} catch (Exception e) {
@@ -91,58 +96,48 @@ public class AttendanceActivity extends ListActivity implements OnClickListener 
 					.show();
 		}
 
-		/*
-		 * list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-		 * public void onItemClick(AdapterView<?> myAdapter, View myView, int
-		 * myItemInt, long mylng) {
-		 * 
-		 * SparseBooleanArray sp = list.getCheckedItemPositions();
-		 * 
-		 * my_sel_items = new String("Selected Items"); for (int i = 0; i <
-		 * sp.size(); i++) { if (sp.valueAt(i)) { my_sel_items = my_sel_items +
-		 * "," + (String) list.getAdapter().getItem(i); } }
-		 * Log.v("selected Roll", my_sel_items);
-		 * 
-		 * } });
-		 */
-
-		/*
-		 * list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-		 * 
-		 * @Override public void onItemClick(AdapterView<?> parent, View view,
-		 * int position, long id) {
-		 * 
-		 * if (!mSelectedItemsIds.get(position)) { list.setItemChecked(position,
-		 * true); presentRoll.add(list.getItemAtPosition(position);
-		 * 
-		 * } else { list.setItemChecked(position, false);
-		 * mSelectedItemsIds.delete(position); presentRoll.remove(position); }
-		 * 
-		 * 
-		 * } });
-		 */
-
 	}
 
 	@Override
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
+		String currtime = DateFormat.getDateTimeInstance().format(new Date());
 		String checked = "";
 		a = new SparseBooleanArray();
 		a.clear();
 		a = getListView().getCheckedItemPositions();
 		int cntChoice = getListAdapter().getCount();
 
-		for(int i = 0; i < cntChoice; i++)
-		{
-		if(a.get(i) == true) 
-	     {
-	         checked += getListView().getItemAtPosition(i).toString() + "\n";
-	     }
-	     
+		for (int i = 0; i < cntChoice; i++) {
+			if (a.get(i) == true) {
+				Selected_Roll_array.add(getListView().getItemAtPosition(i).toString());
+				checked += getListView().getItemAtPosition(i).toString() + "\n";
+			}
+
 		}
-		Log.i("SHUBH", "U selected "+ checked);
-				
+		try {
+			//add a Class in the class table
+			db.addClassDatabase(coursename,t_id,currtime);
+
+			Log.i("SHUBH", "the current time is " + currtime);
+			class_id = db.getClassID(currtime);
+			Log.i("SHUBH", "the fetched class id is " + class_id);
+			
+			//add to attendance table
+			db.addAttendanceData(Selected_Roll_array,sem,class_id);
+			db.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			Toast.makeText(getApplicationContext(), "Some problem occured", Toast.LENGTH_LONG)
+			.show();
+			e.printStackTrace();
+		}
+		
+		Toast.makeText(getApplicationContext(), "Attendance taken", Toast.LENGTH_LONG)
+				.show();
+		Log.i("SHUBH", "U selected " + checked);
+		Intent i1 = new Intent(AttendanceActivity.this, MemberActivity.class);
+		startActivity(i1);
 
 	}
 

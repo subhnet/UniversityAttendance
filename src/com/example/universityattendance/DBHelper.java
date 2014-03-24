@@ -16,8 +16,8 @@ public class DBHelper extends SQLiteOpenHelper {
 	private static final String DATABASE_CREATE1 = " CREATE TABLE teacher_data ( t_id integer primary key autoincrement, t_name text not null, t_pass text not null);";
 	private static final String DATABASE_CREATE2 = " CREATE TABLE student_data ( stud_id integer primary key autoincrement, stud_name text not null, stud_roll text not null, sem integer not null);";
 	private static final String DATABASE_CREATE3 = " CREATE TABLE course_data ( course_id integer primary key autoincrement, course_name text not null, t_id integer , sem integer );";
-	private static final String DATABASE_CREATE4 = "CREATE TABLE attendance_data ( _id integer primary key autoincrement, stud_roll text not null, sem integer ,class_id integer );";
-	private static final String DATABASE_CREATE5 = "CREATE TABLE class_data ( class_id integer primary key autoincrement, course_name text not null, t_id integer, date text );";
+	private static final String DATABASE_CREATE4 = " CREATE TABLE attendance_data ( _id integer primary key autoincrement, stud_roll text not null, sem integer ,class_id integer );";
+	private static final String DATABASE_CREATE5 = " CREATE TABLE class_data ( class_id integer primary key autoincrement, course_name text not null, t_id integer, date text );";
 
 	// Context myContext;
 

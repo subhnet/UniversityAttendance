@@ -32,11 +32,11 @@ public class MemberActivity extends Activity {
 		txtPassword = (EditText) findViewById(R.id.editTPassword);
 
 		dbAdapter = new DBAdapter(this);
-		dbAdapter.open();
+		
 	}
 
 	public void login(View v) {
-
+		dbAdapter.open();
 		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(txtUserName.getWindowToken(), 0);
 		imm.hideSoftInputFromWindow(txtPassword.getWindowToken(), 0);
@@ -63,6 +63,7 @@ public class MemberActivity extends Activity {
 					
 					Log.d(TAG, "putting the extra          " + t_id);
 					i_login.putExtra("key", t_id);
+					dbAdapter.close();
 					startActivity(i_login);
 					finish();
 				} else {
@@ -83,7 +84,7 @@ public class MemberActivity extends Activity {
 	}
 
 	public void register(View v) {
-
+		dbAdapter.open();
 		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(txtUserName.getWindowToken(), 0);
 		imm.hideSoftInputFromWindow(txtPassword.getWindowToken(), 0);
